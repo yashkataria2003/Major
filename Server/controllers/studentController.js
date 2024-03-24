@@ -3,10 +3,16 @@ import studentModel from '../models/studentSchema.js'
 // Add Student
 export const addStudent = async(req, res)=> {
     try {
+        // if (!req.file) {
+        //     return res.status(400).json({ success: false, message: 'Student image not uploaded' });
+        // }
+
         const { name, fatherName, dob, course, startingYear, endingYear, enrollment, address, phone} = await req.body;
+
+        const image = await req.file.filename; // Get the filename from req.file
         
         const student = await studentModel.create({
-            image: req.file.path,
+            image,
             name,
             fatherName,
             dob,
@@ -15,7 +21,7 @@ export const addStudent = async(req, res)=> {
             endingYear,
             enrollment,
             address,
-            phone
+            phone,
         })
 
         await res.status(200).json({success:true, data: student, message:"Student's data Saved"})

@@ -1,5 +1,5 @@
 import express from 'express'
-import { addStudent, showStudent, removeStudent, updateStudent } from '../controllers/studentController.js'  
+import { addNotice, showNotice, removeNotice, updateNotice } from '../controllers/noticeController.js'  
 import multer from "multer";
 
 const router = express.Router();
@@ -7,7 +7,7 @@ const router = express.Router();
 // Set up multer storage for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, `public/students/`);
+        cb(null, `public/notices/`);
     },
     filename: function (req, file, cb) {
         return cb(null, `${Date.now()}-${file.originalname}`)
@@ -17,15 +17,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Add Student 
-router.route("/").post(upload.single('image'), addStudent)
+router.route("/").post(upload.single('attachment'), addNotice)
 
 // Delete Student 
-router.route("/:_id").delete(removeStudent)
+router.route("/:_id").delete(removeNotice)
 
 // Update Student 
-router.route("/:_id").put(updateStudent)
+router.route("/:_id").put(updateNotice)
 
 // Show All Student
-router.route("/").get(showStudent)
+router.route("/").get(showNotice)
 
 export default router

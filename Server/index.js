@@ -5,15 +5,18 @@ import cors from 'cors'
 
 import studentRoute from './routes/studentRoute.js'
 import teacherRoute from './routes/teacherRoute.js'
+import noticeRoute from './routes/noticeRoute.js'
 
 dotenv.config()
 const app = express()
 
 app.use(cors())
 app.use(express.json());
+app.use(express.static('public'))
 
 app.use('/api/v1/students', studentRoute)
 app.use('/api/v1/teachers', teacherRoute)
+app.use('/api/v1/notices', noticeRoute)
 
 app.use(express.urlencoded({extended: false}))
 

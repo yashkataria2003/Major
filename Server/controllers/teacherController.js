@@ -5,11 +5,11 @@ export const addTeacher = async(req, res) => {
     try {
         
         if (!req.file) {
-            return res.status(400).json({ success: false, message: 'No file uploaded' });
+            return res.status(400).json({ success: false, message: 'Teacher image not uploaded' });
         }
         
         const { name, department, designation, experience, email, password } = await req.body;
-        const image = req.file.filename; // Get the filename from req.file
+        const image = await req.file.filename; // Get the filename from req.file
         
         const teacher = await teacherModel.create({
             image,
@@ -48,12 +48,11 @@ export const removeTeacher = async(req, res) => {
 
 // Update Teacher
 export const updateTeacher = async(req, res) => {
-    const { image, name, department, designation, experience, email, password } = await req.body;
+    const { name, department, designation, experience, email, password } = await req.body;
     const _id = await req.params._id;
 
     try {
         const updatedTeacher = await teacherModel.findByIdAndUpdate(_id, {
-            image,
             name,
             department, 
             designation, 
