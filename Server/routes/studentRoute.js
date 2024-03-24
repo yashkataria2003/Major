@@ -1,23 +1,10 @@
 import express from 'express'
 import { addStudent, showStudent, removeStudent, updateStudent } from '../controllers/studentController.js'  
-import multer from "multer";
 
-const router = express.Router();
-
-// Set up multer storage for file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, `public/students/`);
-    },
-    filename: function (req, file, cb) {
-        return cb(null, `${Date.now()}-${file.originalname}`)
-    }
-});
-
-const upload = multer({ storage });
+const router = express.Router()
 
 // Add Student 
-router.route("/").post(upload.single('image'), addStudent)
+router.route("/").post(addStudent)
 
 // Delete Student 
 router.route("/:_id").delete(removeStudent)
